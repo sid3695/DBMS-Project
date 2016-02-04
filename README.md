@@ -1,2 +1,2 @@
 # DBMS-Project
-Project for DBMS
+File Handling based Database Management System using Python Language
