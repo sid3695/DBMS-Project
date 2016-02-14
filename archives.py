@@ -3,10 +3,10 @@ from students import *
 from relations import *
 from courses import *
 
-def sems():
+def archives():
 	try:
-		with open('files/sems.dat', 'rb+') as f:
-			sems = pickle.load(f)
+		with open('files/archived.dat', 'rb+') as f:
+			archived = pickle.load(f)
 	except:
 		print 'Empty'
-		sems = []
+		archived = []

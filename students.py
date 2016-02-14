@@ -1,9 +1,10 @@
 import pickle
-from sems import *
+from archives import *
 from relations import *
 from courses import *
 
-def student():
+students = []
+def Students():
 	try:
 		with open('files/students.dat','rb+') as f:
 			students = pickle.load(f)
@@ -19,9 +20,11 @@ def student():
 		student['dob'] = raw_input('DOB : ')
 		student['sex'] = raw_input('Sex : ')
 		student['address'] = raw_input('Address : ')
-		
+		student['branch'] = raw_input('Branch : ')
+
+
 		students.append(student)
-		write2f(students)	
+		writes2f(students)	
 
 	elif ch == 2:
 		rno = raw_input("roll no to be deleted")
@@ -29,16 +32,16 @@ def student():
 			if(students[stu]['rollno']) == rno:
 				del students[stu]
 				#del allocations
-				write2f(students)
+				writes2f(students)
 	elif ch == 3:
 		rno = raw_input("roll no to be updated")
 		for stu in xrange(len(students)):
 			if(students[stu]['rollno']) == rno:
 				students[stu]['name'] = raw_input('Enter name')
 				#upd allocations
-				write2f(students)
+				writes2f(students)
 	print students 	
 
-def write2f(students):
+def writes2f(students):
 	with open('files/students.dat','wb') as f:
 		pickle.dump(students,f)

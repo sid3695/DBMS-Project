@@ -1,6 +1,6 @@
 import pickle
 from students import *
-from sems import *
+from archives import *
 from teachers import *
 from courses import *
 
@@ -15,8 +15,16 @@ from courses import *
 
 
 def main():
-	print 'hi'
+	while 1 :
+		print 'hi'
 
-	student()
+		ch = raw_input('choice 1 for st, 2 for cou, 3 for courses, 4 for arch')
+		if ch == '1':
+			Students()
+		elif ch == '2':
+			Courses()
+		elif ch == '3':
+			Relations()
+
 
 main()
