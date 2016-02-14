@@ -2,6 +2,7 @@ import pickle
 from students import *
 from archives import *
 from relations import *
+from course_allocations import *
 
 courses = []
 
@@ -18,12 +19,13 @@ def Courses():
 		course = {} #each course is a dict
 		course['name'] = raw_input('Enter name : ')
 		course['courseid'] = raw_input('Course id : ')
-		course['sem'] = raw_input('sem : ')
-		course['type'] = raw_input('UG/PG : ')
-		course['branch'] = raw_input('Branch : ')
+		#course['sem'] = raw_input('sem : ')
+		#course['type'] = raw_input('UG/PG : ')
+		#course['branch'] = raw_input('Branch : ')
 		course['credits'] = raw_input('Credits : ')
 		#apply contra
-		courses.append(course)
+		if course not in courses:
+			courses.append(course)
 		writec2f(courses)	
 
 	elif ch == 2:

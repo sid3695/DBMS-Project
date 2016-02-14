@@ -2,6 +2,7 @@ import pickle
 from archives import *
 from relations import *
 from courses import *
+from course_allocations import *
 
 students = []
 def Students():
@@ -21,9 +22,9 @@ def Students():
 		student['sex'] = raw_input('Sex : ')
 		student['address'] = raw_input('Address : ')
 		student['branch'] = raw_input('Branch : ')
-
-
-		students.append(student)
+		student['type'] = raw_input('Student : ')
+		if student not in students:
+			students.append(student)
 		writes2f(students)	
 
 	elif ch == 2:
