@@ -23,11 +23,12 @@ def Course_Allocations():
 		course_allocation['type'] = raw_input('UG/PG : ')
 		course_allocation['courseids'] = [int(x) for x in raw_input('Enter Course Id(s) separated by space: ').split()]
 		course_allocation['branch'] = raw_input('branch')
+		course_allocation['sem'] = raw_input('sem')
 		#apply constraints
 
 		flag = 1
 		for i in xrange(len(course_allocations)):
-			if course_allocations[i]['type'] == course_allocation['type'] and course_allocations[i]['branch']== course_allocation['branch']:
+			if course_allocations[i]['type'] == course_allocation['type'] and course_allocations[i]['branch']== course_allocation['branch'] and course_allocations[i]['sem']== course_allocation['sem']:
 				flag = 0 #course added to a nonexisting allocation
 				course_allocations[i]['courseids'] = union_list(course_allocations[i]['courseids'] , course_allocation['courseids'])
 				writeca2f(course_allocations)
