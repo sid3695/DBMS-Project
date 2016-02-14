@@ -1,3 +1,9 @@
+import pickle
+from students import *
+from sems import *
+from teachers import *
+from courses import *
+
 def student():
 	try:
 		with open('files/students.dat','rb+') as f:
