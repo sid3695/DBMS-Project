@@ -1,7 +1,6 @@
 import pickle
-from students import *
 from sems import *
-from teachers import *
+from relations import *
 from courses import *
 
 def student():
@@ -12,13 +11,32 @@ def student():
 		print 'hi'
 		students = []
 
-	'''ch = int(raw_input())
+	ch = int(raw_input('1 for add\n2 for del\n3 for upd\n'))
 	if ch == 1:
 		student = {} #each st is a dict
-		student['name'] = raw_input()
+		student['name'] = raw_input('Enter name : ')
+		student['rollno'] = raw_input('Roll No : ')
+		student['dob'] = raw_input('DOB : ')
+		student['sex'] = raw_input('Sex : ')
+		student['address'] = raw_input('Address : ')
+		
 		students.append(student)
 		write2f(students)	
-	#if ch == 2:'''
+
+	elif ch == 2:
+		rno = raw_input("roll no to be deleted")
+		for stu in xrange(len(students)):
+			if(students[stu]['rollno']) == rno:
+				del students[stu]
+				#del allocations
+				write2f(students)
+	elif ch == 3:
+		rno = raw_input("roll no to be updated")
+		for stu in xrange(len(students)):
+			if(students[stu]['rollno']) == rno:
+				students[stu]['name'] = raw_input('Enter name')
+				#upd allocations
+				write2f(students)
 	print students 	
 
 def write2f(students):

@@ -17,4 +17,6 @@ from courses import *
 def main():
 	print 'hi'
 
+	student()
+
 main()

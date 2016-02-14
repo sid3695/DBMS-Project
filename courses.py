@@ -1,8 +1,7 @@
 import pickle
 from students import *
 from sems import *
-from teachers import *
-from courses import *
+from relations import *
 
 def courses():
 	try:
