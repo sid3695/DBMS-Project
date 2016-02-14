@@ -3,11 +3,13 @@ from relations import *
 from students import *
 from archives import *
 from courses import *
+import datetime
 
 course_allocations = []
 
 def union_list(a,b):
 	return list(set(a) | set(b))
+
 
 def Course_Allocations():
 	try:
