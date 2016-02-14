@@ -22,7 +22,32 @@ def Students():
 		student['sex'] = raw_input('Sex : ')
 		student['address'] = raw_input('Address : ')
 		student['branch'] = raw_input('Branch : ')
-		student['type'] = raw_input('Student : ')
+		student['type'] = raw_input('UG/PG : ')
+		student['sem'] = raw_input('Sem : ')
+
+		try:
+			with open('files/course_allocations.dat', 'rb+') as f:
+				existing = pickle.load(f)
+		except:
+			existing = []
+
+		try:
+			with open('files/relations.dat', 'rb+') as f:
+				relations  = pickle.load(f)
+		except:
+			relations = []
+
+		for i in existing:
+			if i['type'] == student['type'] and i['branch']== student['branch'] and i['sem']== student['sem']:
+				relation = {}
+				relation['co_alloc_id'] = i['co_alloc_id']
+				relation['rollno'] = student['rollno']
+				if relation not in relations:
+					relations.append(relation)
+					print relations
+					writer2f(relations)
+
+
 		if student not in students:
 			students.append(student)
 		writes2f(students)	

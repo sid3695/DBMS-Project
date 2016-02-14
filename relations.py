@@ -18,7 +18,7 @@ def Relations():
 	if ch == 1:
 		relation = {} #each entry is a dict
 		relation['rollno'] = raw_input('rollno : ')
-		relation['courseid'] = raw_input('Course id : ')
+		relation['co_alloc_id'] = raw_input('Course Alloc id : ')
 		
 		#apply constraints
 

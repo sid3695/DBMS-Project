@@ -1,9 +1,10 @@
 import pickle
 from students import *
 from archives import *
-from teachers import *
-from courses import *
+from relations import *
 from course_allocations import *
+from courses import *
+
 
 #student
 #sem 

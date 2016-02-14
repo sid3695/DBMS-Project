@@ -1,8 +1,8 @@
 import pickle
+from relations import *
 from students import *
 from archives import *
 from courses import *
-from relations import *
 
 course_allocations = []
 
@@ -20,8 +20,9 @@ def Course_Allocations():
 	ch = int(raw_input('1 for add\n2 for del\n3 for upd\n'))
 	if ch == 1:
 		course_allocation = {} #each entry is a dict
+		course_allocation['co_alloc_id'] = raw_input('Enter a unique id for this course allocation: ')
 		course_allocation['type'] = raw_input('UG/PG : ')
-		course_allocation['courseids'] = [int(x) for x in raw_input('Enter Course Id(s) separated by space: ').split()]
+		course_allocation['courseids'] = [x for x in raw_input('Enter Course Id(s) separated by space: ').split()]
 		course_allocation['branch'] = raw_input('branch')
 		course_allocation['sem'] = raw_input('sem')
 		#apply constraints
@@ -37,6 +38,30 @@ def Course_Allocations():
 
 		if flag == 1: #course added to a nonexisting allocation
 			course_allocations.append(course_allocation)
+			#now check if some student is there having the same branch, year and sem
+			try:
+				with open('files/students.dat') as f:
+					students = pickle.load(f)
+			except:
+				students = []
+
+			try:
+				with open('files/relations.dat', 'rb+') as f:
+					relations  = pickle.load(f)
+			except:
+				relations = []
+
+			for i in students:
+				if i['type'] == course_allocation['type'] and i['branch']== course_allocation['branch'] and i['sem']== course_allocation['sem']:
+					relation = {}
+					relation['co_alloc_id'] = course_allocation['co_alloc_id']
+					relation['rollno'] = i['rollno']
+					if relation not in relations:
+						relations.append(relation)
+						print relations
+						with open('files/relations.dat','wb') as f:
+							pickle.dump(relations,f)
+
 			writeca2f(course_allocations)
 	print course_allocations
 
