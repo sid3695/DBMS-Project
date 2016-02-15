@@ -24,10 +24,21 @@ def Courses():
 		#course['type'] = raw_input('UG/PG : ')
 		#course['branch'] = raw_input('Branch : ')
 		course['credits'] = raw_input('Credits : ')
+
+		flag=1
+		try:
+			cred=int(course['credits'])
+			if(cred>4 or cred<1):
+				flag=0
+				print 'invalid credits'
+		except:
+			print 'Invalid input'
+
 		#apply contra
-		if course not in courses:
-			courses.append(course)
-		writec2f(courses)	
+		if (flag==1):
+			if course not in courses:
+				courses.append(course)
+			writec2f(courses)	
 
 	elif ch == 2:
 		cid = raw_input("course id to be deleted")

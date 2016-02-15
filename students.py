@@ -15,7 +15,7 @@ def Students():
 		print 'hi'
 		students = []
 
-	ch = int(raw_input('1 for add\n2 for del\n3 for upd\n'))
+	ch = int(raw_input('1 for add\n2 for del\n3 for upd\n4 all students'))
 	if ch == 1:
 		student = {} #each st is a dict
 		student['name'] = raw_input('Enter name : ')
@@ -96,7 +96,12 @@ def Students():
 				students[stu]['name'] = raw_input('Enter name')
 				#upd allocations
 				writes2f(students)
-	print students 	
+
+	elif ch== 4:
+		print 'Name\tRoll No\tsex\tDOB\t\tBranch\tSem\ttype\n'
+		for i in xrange(len(students)):
+			print (students[i]['name']+'\t'+students[i]['rollno']+'\t'+students[i]['sex']+'\t'+students[i]['dob']+'\t'+students[i]['branch']+'\t'+students[i]['sem']+'\t'+students[i]['type']+'\n')
+	
 
 def writes2f(students):
 	with open('files/students.dat','wb') as f:
