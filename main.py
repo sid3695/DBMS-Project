@@ -4,6 +4,7 @@ from archives import *
 from relations import *
 from course_allocations import *
 from courses import *
+from utils import write_com
 
 
 #student
@@ -14,7 +15,6 @@ from courses import *
 
 #sem -> courses [courseid], sem-no, 
 #courses -> id, name, credits,
-
 
 def main():
 	while 1 :

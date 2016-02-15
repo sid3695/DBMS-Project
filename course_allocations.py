@@ -4,6 +4,8 @@ from students import *
 from archives import *
 from courses import *
 import datetime
+from utils import write_com
+
 
 course_allocations = []
 
@@ -54,15 +56,16 @@ def Course_Allocations():
 				relations = []
 
 			for i in students:
+				#print i['type'], i['branch'], i['sem']
 				if i['type'] == course_allocation['type'] and i['branch']== course_allocation['branch'] and i['sem']== course_allocation['sem']:
 					relation = {}
 					relation['co_alloc_id'] = course_allocation['co_alloc_id']
 					relation['rollno'] = i['rollno']
+					relation['dor'] = datetime.datetime.now()
 					if relation not in relations:
 						relations.append(relation)
 						print relations
-						with open('files/relations.dat','wb') as f:
-							pickle.dump(relations,f)
+						write_com(relations, 'files/relations.dat')
 
 			writeca2f(course_allocations)
 	print course_allocations

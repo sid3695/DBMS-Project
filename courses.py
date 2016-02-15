@@ -3,6 +3,7 @@ from students import *
 from archives import *
 from relations import *
 from course_allocations import *
+from utils import write_com
 
 courses = []
 

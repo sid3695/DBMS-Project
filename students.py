@@ -3,6 +3,8 @@ from archives import *
 from relations import *
 from courses import *
 from course_allocations import *
+from utils import write_com
+import datetime
 
 students = []
 def Students():
@@ -42,6 +44,7 @@ def Students():
 				relation = {}
 				relation['co_alloc_id'] = i['co_alloc_id']
 				relation['rollno'] = student['rollno']
+				relation['dor'] = datetime.datetime.now()
 				if relation not in relations:
 					relations.append(relation)
 					print relations

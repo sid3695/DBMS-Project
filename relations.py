@@ -4,6 +4,8 @@ from archives import *
 from courses import *
 from course_allocations import *
 import datetime
+from utils import write_com
+
 
 relations = []
 
@@ -23,7 +25,8 @@ def check_Expiry():
 		archived = []
 		
 	for i in xrange(len(relations)):
-		if(relations[i]['dor'] + datetime.timedelta(months=6) < datetime.datetime.now()):
+		relations[i]['dor'] + datetime.timedelta(days=180)
+		if(relations[i]['dor'] + datetime.timedelta(days=180) < datetime.datetime.now()):
 			archived.append(relations[i])
 			del relations[i]	
 			writer2arc(archived)
@@ -45,7 +48,6 @@ def Relations():
 		relation['co_alloc_id'] = raw_input('Course Alloc id : ')
 		print datetime.datetime.now()
 		relation['dor']=datetime.datetime.now()
-		
 		#apply constraints
 
 		if relation not in relations:
