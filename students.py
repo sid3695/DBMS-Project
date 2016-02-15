@@ -27,18 +27,34 @@ def Students():
 		student['type'] = raw_input('UG/PG : ')
 		student['sem'] = raw_input('Sem : ')
 
+		flag=1
+		
 		try:
-			with open('files/course_allocations.dat', 'rb+') as f:
-				existing = pickle.load(f)
-		except:
-			existing = []
+			semester=int(student['sem'])
+			if(student['type']=='UG' and semester>8):
+				print('Only upto 8 semesters')
+				flag=0
 
-		try:
-			with open('files/relations.dat', 'rb+') as f:
-				relations  = pickle.load(f)
+			if(student['type']=='PG' and semester>2):
+				print('only upto 2 semesters')
+				flag=0
 		except:
-			relations = []
+			print 'only integer values allowed'
 
+		if(flag==1):
+			try:
+				with open('files/course_allocations.dat', 'rb+') as f:
+					existing = pickle.load(f)
+			except:
+				existing = []
+
+			try:
+				with open('files/relations.dat', 'rb+') as f:
+					relations  = pickle.load(f)
+			except:
+				relations = []
+
+<<<<<<< HEAD
 		for i in existing:
 			if i['type'] == student['type'] and i['branch']== student['branch'] and i['sem']== student['sem']:
 				relation = {}
@@ -49,11 +65,22 @@ def Students():
 					relations.append(relation)
 					print relations
 					writer2f(relations)
+=======
+			for i in existing:
+				if i['type'] == student['type'] and i['branch']== student['branch'] and i['sem']== student['sem']:
+					relation = {}
+					relation['co_alloc_id'] = i['co_alloc_id']
+					relation['rollno'] = student['rollno']
+					if relation not in relations:
+						relations.append(relation)
+						print relations
+						writer2f(relations)
+>>>>>>> b866a2e21719e658646ccefec12ebbd4773918e9
 
 
-		if student not in students:
-			students.append(student)
-		writes2f(students)	
+			if student not in students:
+				students.append(student)
+			writes2f(students)	
 
 	elif ch == 2:
 		rno = raw_input("roll no to be deleted")
