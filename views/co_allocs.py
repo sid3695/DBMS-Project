@@ -164,7 +164,7 @@ def spu_menu():
 			try:
 				if(course_allocations[stu]['co_alloc_id']) == x:
 					found = 1
-					return redirect(url_for('papp.spu_form', co_alloc_id = x))
+					return redirect(url_for('papp.spu_form', co_alloc_id = x, sem = course_allocations[stu]['sem'], type = course_allocations[stu]['type'], branch = course_allocations[stu]['branch']))
 			except:
 				pass
 		if found == 0:
@@ -172,8 +172,8 @@ def spu_menu():
 	else:
 		return render_template('sp_upd_menu.html')
 
-@papp.route('/spu_form/<co_alloc_id>', methods = ['GET', 'POST'])
-def spu_form(co_alloc_id):
+@papp.route('/spu_form/<co_alloc_id>/<sem>/<type>/<branch>', methods = ['GET', 'POST'])
+def spu_form(co_alloc_id, sem, type, branch):
 	if request.method == 'POST':
 		x = str(request.form['co_alloc_id'])
 		course_allocations = file_to_list('files/course_allocations.dat')
@@ -181,8 +181,8 @@ def spu_form(co_alloc_id):
 		found = 0
 		for i in course_allocations:
 			print 'i',i
-			#if i['co_alloc_id'] == x and co_alloc_id != x:
-				#found = 1
+			if i['co_alloc_id'] == x and co_alloc_id != x:
+				found = 1
 		if found == 1:
 			return render_template('sp_upd_menu.html', flag = 6)
 		
@@ -238,7 +238,9 @@ def spu_form(co_alloc_id):
 		flag_change = 0
 		if(co_alloc_id != course_allocation['co_alloc_id']):#changed
 			flag_change = 1
-		
+		flag_2_change = 0
+		if(sem != course_allocation['sem'] or branch != course_allocation['branch'] or type != course_allocation['type']):
+			flag_2_change = 1
 		course_allocations = file_to_list('files/course_allocations.dat')
 
 		for stu in xrange(len(course_allocations)):
@@ -262,6 +264,35 @@ def spu_form(co_alloc_id):
 				except:
 					pass
 		relations = temp
+
+		#############################################
+		#course_allocations = file_to_list('files/course_allocations.dat')
+		#print 'f',flag_2_change
+		temp = []
+		if flag_2_change:
+			#check if no repeat
+			ex = 0
+			for i in course_allocations:
+				if (sem == course_allocation['sem'] and branch == course_allocation['branch'] and type == course_allocation['type']):
+					ex = 1
+			if(ex == 1):
+				return render_template('sp_upd_menu.html', flag = 66)
+			#if no repeat, so the sem plan has changed, we need to delete existing relat
+			if(ex == 0):
+				print relations
+				for i in xrange(len(relations)):
+					try:
+						#print relations[i]
+						if relations[i]['co_alloc_id'] != course_allocation['co_alloc_id']:
+							temp.append(relations[i])
+					except:
+						pass
+				relations = temp
+		#print flag_2_change
+		#print 'xooo',relations
+		#print '\n'
+		#############################################
+
 		for i in students:
 			if i['type'] == course_allocation['type'] and i['branch']== course_allocation['branch'] and i['sem']== course_allocation['sem']:
 				relation = {}
@@ -274,8 +305,7 @@ def spu_form(co_alloc_id):
 						flag = 1
 				if flag == 0: #wrong, cause of dor, check only for first two ###############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					relations.append(relation)
-					print relations
-					write_com(relations, 'files/relations.dat')
+		write_com(relations, 'files/relations.dat')
 
 		
 		write_com(course_allocations,'files/course_allocations.dat')
