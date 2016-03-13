@@ -120,10 +120,14 @@ def cu_form(courseid):
 		print existing
 		if flag_change: #remove previous relations
 			for i in xrange(len(existing)):
-				if courseid in existing[i]['courseids']:
-					existing[i]['courseids'].remove(courseid)
-					existing.append(course) #testing
-					write_com(existing, 'files/course_allocations.dat')
+				try:
+					temp = []
+					if courseid in existing[i]['courseids']:
+						existing[i]['courseids'].remove(courseid)
+						existing[i]['courseids'].append(course['courseid']) #testing
+						write_com(existing, 'files/course_allocations.dat')
+				except:
+					pass
 		print existing
 		
 		write_com(courses,'files/courses.dat')

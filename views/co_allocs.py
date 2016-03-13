@@ -81,6 +81,13 @@ def spa():
 		course_allocation['branch'] = str(request.form['branch'])
 		course_allocation['sem'] = str(request.form['sem'])
 
+		for i in course_allocations:
+			try:
+				if i['branch']==course_allocation['branch'] and i['sem'] == course_allocation['sem'] and course_allocation['type']==i['type']:
+					return render_template('spa.html', flag = 66)
+			except:
+				pass
+
 		if course_allocation not in course_allocations:
 			course_allocations.append(course_allocation)
 		write_com(course_allocations,'files/course_allocations.dat')
@@ -245,15 +252,16 @@ def spu_form(co_alloc_id):
 		#	for stu in xrange(len(students)):
 		#		if(students[stu]['rollno']) == rollno:
 		#			del students[stu]
-
+		temp = []
 		if flag_change: #remove previous relations
 			for i in xrange(len(relations)):
 				try:
-					if relations[i]['co_alloc_id'] == co_alloc_id:
-						del relations[i]
+					#print relations[i]
+					if relations[i]['co_alloc_id'] != co_alloc_id:
+						temp.append(relations[i])
 				except:
 					pass
-
+		relations = temp
 		for i in students:
 			if i['type'] == course_allocation['type'] and i['branch']== course_allocation['branch'] and i['sem']== course_allocation['sem']:
 				relation = {}

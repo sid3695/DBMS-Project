@@ -41,8 +41,11 @@ def r_add():
 
 		found = 0
 		for i in course_allocations:
-			if i['co_alloc_id'] == x:
-				found = 1
+			try:
+				if i['co_alloc_id'] == x:
+					found = 1
+			except:
+				pass
 		if found == 0:
 			return render_template('ra.html', flag = 6)
 

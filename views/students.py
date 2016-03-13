@@ -77,15 +77,18 @@ def sa():
 		relations = file_to_list('files/relations.dat') 
 		
 		for i in existing:
-			if i['type'] == student['type'] and i['branch']== student['branch'] and i['sem']== student['sem']:
-				relation = {}
-				relation['co_alloc_id'] = i['co_alloc_id']
-				relation['rollno'] = student['rollno']
-				relation['dor'] = datetime.datetime.now()
-				if relation not in relations:
-					relations.append(relation)
-					print relations
-					write_com(relations, 'files/relations.dat')
+			try:
+				if i['type'] == student['type'] and i['branch']== student['branch'] and i['sem']== student['sem']:
+					relation = {}
+					relation['co_alloc_id'] = i['co_alloc_id']
+					relation['rollno'] = student['rollno']
+					relation['dor'] = datetime.datetime.now()
+					if relation not in relations:
+						relations.append(relation)
+						print relations
+						write_com(relations, 'files/relations.dat')
+			except:
+				pass
 
 		if student not in students:
 			students.append(student)
@@ -210,17 +213,19 @@ def su_form(rollno):
 				if relations[i]['rollno'] == rollno:
 					del relations[i]
 
-		for i in existing:
-			if i['type'] == student['type'] and i['branch']== student['branch'] and i['sem']== student['sem']:
-				relation = {}
-				relation['co_alloc_id'] = i['co_alloc_id']
-				relation['rollno'] = student['rollno']
-				relation['dor'] = datetime.datetime.now()
-				if relation not in relations:
-					relations.append(relation)
-					print relations
-					write_com(relations, 'files/relations.dat')
-
+		try:
+			for i in existing:
+				if i['type'] == student['type'] and i['branch']== student['branch'] and i['sem']== student['sem']:
+					relation = {}
+					relation['co_alloc_id'] = i['co_alloc_id']
+					relation['rollno'] = student['rollno']
+					relation['dor'] = datetime.datetime.now()
+					if relation not in relations:
+						relations.append(relation)
+						print relations
+						write_com(relations, 'files/relations.dat')
+		except:
+			pass
 		
 		write_com(students,'files/students.dat')
 		return render_template('s_upd_menu.html', flag = 99)
