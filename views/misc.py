@@ -37,7 +37,7 @@ def del_all():
 def fine():
 	if request.method == 'POST':
 		x = str(request.form['date'])
-		y = x.replace('/',' ').split()
+		y = x.replace('-',' ').split()
 		d0 = date(int(y[2]), int(y[1]), int(y[0]))
 		print d0
 		students = file_to_list('files/students.dat')
