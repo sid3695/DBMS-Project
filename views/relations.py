@@ -96,11 +96,11 @@ def rd():
 				print relations
 				write_com(relations, 'files/relations.dat')
 				#write_com(course_allocations, 'files/course_allocations.dat')
-				return render_template('spd.html', flag = 99)
+				return render_template('rdel.html', flag = 99)
 		if found == 0:
-			return render_template('spd.html', flag = 6)
+			return render_template('rdel.html', flag = 6)
 	else:
-		return render_template('spd.html')
+		return render_template('rdel.html')
 
 @rapp.route('/r_all')
 def rel_all():
