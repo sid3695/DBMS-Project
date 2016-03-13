@@ -32,7 +32,7 @@
             	<div class="panel panel-default">
             		<div class="panel-heading"><h4>Form</h4></div>
   					<div class="panel-body">
-  					<form class="form-horizontal" role="form" method="post" action="/spu_form/{{y.co_alloc_id}}/{{y.sem}}/{{y.type}}/{{y.branch}}">
+  					<form name = "myform" onsubmit = "return validateForm()" class="form-horizontal" role="form" method="post" action="/spu_form/{{y.co_alloc_id}}/{{y.sem}}/{{y.type}}/{{y.branch}}">
             {%if flag == 1%}
             <p>Gender can only be M or F</p>
             {%elif flag == 2%}
@@ -99,3 +99,44 @@
     <!-- /.container -->
 
 {% endblock content %}
+{% block js %}
+<script>
+function validateForm() {
+    
+    x = document.forms["myform"]["branch"].value;
+    if ($.inArray(x, ['COE', 'ME', 'ECE']) == -1) {
+    alert("Branch can only be COE, ME or ECE");
+        return false;
+    }
+    x = document.forms["myform"]["type"].value;
+    if ($.inArray(x, ['PG','UG']) == -1) {
+    alert("Programme Type can only be PG/UG");
+        return false;
+    }
+
+    var y = document.forms["myform"]["type"].value;
+    x = document.forms["myform"]["sem"].value;
+
+    if((!$.isNumeric(x)) ){
+    alert("Sem should be a number");
+      return false;
+    }
+    if(y == 'PG')
+    {
+      if(Number(x)>2 || Number(x)<=0)
+      {
+        alert("PG Sem should be less than 2");
+        return false;
+      }
+    }
+    if(y == 'UG')
+    {
+      if(Number(x)>8 || Number(x)<=0)
+      {
+        alert("UG Sem should be less than 8");
+        return false;
+      }
+    }
+}
+</script>
+{%endblock js %}

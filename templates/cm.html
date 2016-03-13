@@ -32,7 +32,7 @@
             	<div class="panel panel-default">
             		<div class="panel-heading"><h4>Form</h4></div>
   					<div class="panel-body">
-  					<form class="form-horizontal" role="form" method="post" action="/cu_form/{{y.courseid}}">
+  					<form name = "myform" onsubmit = "return validateForm()" class="form-horizontal" role="form" method="post" action="/cu_form/{{y.courseid}}">
             {%if flag == 1%}
             <p>Gender can only be M or F</p>
             {%elif flag == 2%}
@@ -87,3 +87,16 @@
     <!-- /.container -->
 
 {% endblock content %}
+
+{% block js %}
+<script>
+function validateForm() {
+    var x = document.forms["myform"]["credits"].value;
+    console.log(x)
+    if (Number(x) > 4 || Number(x) <=0 ){
+        alert("Credits must be between 1 - 4");
+        return false;
+    }
+}
+</script>
+{%endblock js %}
