@@ -8,13 +8,14 @@ from views.students import sapp
 from views.courses import capp
 from views.relations import rapp
 from views.co_allocs import papp
-
+from views.misc import mapp
 
 app = Flask(__name__)
 app.register_blueprint(sapp)
 app.register_blueprint(capp)
 app.register_blueprint(rapp)
 app.register_blueprint(papp)
+app.register_blueprint(mapp)
 ##################################
 
 app.config['DEBUG'] = True

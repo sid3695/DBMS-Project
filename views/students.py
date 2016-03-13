@@ -72,7 +72,7 @@ def sa():
 		student['type'] = str(request.form['type'])
 		student['sem'] = str(request.form['sem'])
 		student['phone'] = str(request.form['phone'])
-
+		student['regdate'] = datetime.date.today()
 		existing = file_to_list('files/course_allocations.dat')
 		relations = file_to_list('files/relations.dat') 
 		
@@ -190,7 +190,7 @@ def su_form(rollno):
 		student['type'] = str(request.form['type'])
 		student['sem'] = str(request.form['sem'])
 		student['phone'] = str(request.form['phone'])
-
+		student['regdate'] = datetime.date.today()
 		existing = file_to_list('files/course_allocations.dat')
 		relations = file_to_list('files/relations.dat')
 		flag_change = 0
