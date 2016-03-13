@@ -45,6 +45,11 @@
             <p>Sems for UG can be at max 8, and for UG, at max 2</p>
             {%elif flag == 6%}
             <p>Course Allocation ID already allotted</p>
+            {%elif flag == 56%}
+            <p>The following courses don't exist:
+              {% for i in pop %}
+                {{i}}
+                {% endfor %}</p>
             {%elif flag == 99%}
             <p>Added Successfully</p>
             {%elif flag == 66%}

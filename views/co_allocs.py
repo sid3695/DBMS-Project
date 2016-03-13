@@ -62,7 +62,7 @@ def spa():
 		for i in (request.form['courseids']).split():
 			lis.append(i)
 		print lis
-
+		wrong = []
 		if len(lis) > 5:
 			return render_template('spa.html', flag = 55)
 		lis2 = []
@@ -76,7 +76,13 @@ def spa():
 					flag = 1
 			if flag == 1:
 				lis2.append(i)
+			else:
+				wrong.append(i)
 		print lis2
+
+		if len(wrong)!= 0:
+			return render_template('spa.html', pop = wrong, flag = 56)
+
 		course_allocation['courseids'] = lis2
 		course_allocation['branch'] = str(request.form['branch'])
 		course_allocation['sem'] = str(request.form['sem'])
@@ -222,6 +228,7 @@ def spu_form(co_alloc_id, sem, type, branch):
 		courses = file_to_list('files/courses.dat')
 		temp = []
 		#print course_allocation['courseids'] #= (request.form['courseids']).split() #split when you need
+		wrong = []
 		for i in phi:
 			flag = 0
 			for j in courses:
@@ -229,6 +236,11 @@ def spu_form(co_alloc_id, sem, type, branch):
 					flag = 1
 			if flag == 1:
 				temp.append(str(i))
+			else:
+				wrong.append(i)
+
+		if len(wrong) != 0:
+			return render_template('sp_upd_menu.html', flag = 56, pop = wrong)
 		print temp
 		course_allocation['courseids'] = temp
 

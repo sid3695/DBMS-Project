@@ -207,11 +207,15 @@ def su_form(rollno):
 		#	for stu in xrange(len(students)):
 		#		if(students[stu]['rollno']) == rollno:
 		#			del students[stu]
-
+		temp_dt = datetime.datetime.now()
 		if flag_change: #remove previous relations
+			temp = []
 			for i in xrange(len(relations)):
+				if relations[i]['rollno'] != rollno:
+					temp.append(relations[i])
 				if relations[i]['rollno'] == rollno:
-					del relations[i]
+					temp_dt = relations[i]['dor']
+			relations = temp
 
 		try:
 			for i in existing:
@@ -219,7 +223,7 @@ def su_form(rollno):
 					relation = {}
 					relation['co_alloc_id'] = i['co_alloc_id']
 					relation['rollno'] = student['rollno']
-					relation['dor'] = datetime.datetime.now()
+					relation['dor'] = temp_dt
 					if relation not in relations:
 						relations.append(relation)
 						print relations
