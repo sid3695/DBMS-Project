@@ -20,8 +20,11 @@ def spa():
 
 		found = 0
 		for i in course_allocations:
-			if i['co_alloc_id'] == x:
-				found = 1
+			try:
+				if i['co_alloc_id'] == x:
+					found = 1
+			except:
+				pass
 		if found == 1:
 			return render_template('spa.html', flag = 6)
 
@@ -55,19 +58,26 @@ def spa():
 		course_allocation['type'] = str(request.form['type'])
 
 		courses = file_to_list('files/courses.dat')
+		lis = []
+		for i in (request.form['courseids']).split():
+			lis.append(i)
+		print lis
 
-		course_allocation['courseids'] = (request.form['courseids']).split() #split when you need
-		if len(course_allocation['courseids']) > 5:
+		if len(lis) > 5:
 			return render_template('spa.html', flag = 55)
-		for i in course_allocation['courseids']:
+		lis2 = []
+		for i in lis:
+			print i
 			flag = 0
 			for j in courses:
+				print j['courseid']
+				print i
 				if j['courseid'] == i:
 					flag = 1
-			if flag == 0:
-				course_allocation['courseids'].remove(i)
-
-
+			if flag == 1:
+				lis2.append(i)
+		print lis2
+		course_allocation['courseids'] = lis2
 		course_allocation['branch'] = str(request.form['branch'])
 		course_allocation['sem'] = str(request.form['sem'])
 
@@ -77,7 +87,7 @@ def spa():
 
 
 		students = file_to_list('files/students.dat')
-		relations = file_to_list('files/courses.dat')
+		relations = file_to_list('files/relations.dat')
 
 		for i in students:
 			#print i['type'], i['branch'], i['sem']
@@ -86,7 +96,11 @@ def spa():
 				relation['co_alloc_id'] = course_allocation['co_alloc_id']
 				relation['rollno'] = i['rollno']
 				relation['dor'] = datetime.datetime.now()
-				if relation not in relations:
+				flag = 0
+				for r in relations:
+					if r['co_alloc_id'] == relation['co_alloc_id'] and r['rollno'] == relation['rollno']:
+						flag = 1
+				if flag == 0: #wrong, cause of dor, check only for first two ###############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					relations.append(relation)
 					print relations
 					write_com(relations, 'files/relations.dat')
@@ -104,19 +118,28 @@ def spd():
 		x = str(request.form['co_alloc_id'])
 		course_allocations = file_to_list('files/course_allocations.dat')
 		relations = file_to_list('files/relations.dat')
+		cor = relations
 		found = 0
 		for stu in xrange(len(course_allocations)):
-			if(course_allocations[stu]['co_alloc_id']) == x:
-				del course_allocations[stu]
-				found = 1
-				for j in xrange(len(relations)):
-					print len(relations)
-					if relations[j]['co_alloc_id'] == x:
-						del relations[j]
-						print relations
-						write_com(relations, 'files/relations.dat')
-				write_com(course_allocations, 'files/course_allocations.dat')
-				return render_template('spd.html', flag = 99)
+			try:
+				if(course_allocations[stu]['co_alloc_id']) == x:
+					del course_allocations[stu]
+					found = 1
+			except:
+				pass
+		print relations
+		temp = []
+		for j in relations:
+			if j['co_alloc_id'] != x:
+				temp.append(j)
+
+		
+
+		relations = temp
+		write_com(relations, 'files/relations.dat')
+		write_com(course_allocations, 'files/course_allocations.dat')
+		if found == 1:
+			return render_template('spd.html', flag = 99)
 		if found == 0:
 			return render_template('spd.html', flag = 6)
 	else:
@@ -131,9 +154,12 @@ def spu_menu():
 
 		found = 0
 		for stu in xrange(len(course_allocations)):
-			if(course_allocations[stu]['co_alloc_id']) == x:
-				found = 1
-				return redirect(url_for('papp.spu_form', co_alloc_id = x))
+			try:
+				if(course_allocations[stu]['co_alloc_id']) == x:
+					found = 1
+					return redirect(url_for('papp.spu_form', co_alloc_id = x))
+			except:
+				pass
 		if found == 0:
 			return render_template('sp_upd_menu.html', flag = 6)
 	else:
@@ -147,8 +173,9 @@ def spu_form(co_alloc_id):
 
 		found = 0
 		for i in course_allocations:
-			if i['co_alloc_id'] == x and co_alloc_id != x:
-				found = 1
+			print 'i',i
+			#if i['co_alloc_id'] == x and co_alloc_id != x:
+				#found = 1
 		if found == 1:
 			return render_template('sp_upd_menu.html', flag = 6)
 		
@@ -181,14 +208,14 @@ def spu_form(co_alloc_id):
 		course_allocation = {} #each entry is a dict
 		course_allocation['co_alloc_id'] = str(request.form['co_alloc_id'])
 		course_allocation['type'] = str(request.form['type'])
-		course_allocation['courseids'] = (request.form['courseids'])
+		phi = (request.form['courseids']).split()
 		course_allocation['branch'] = str(request.form['branch'])
 		course_allocation['sem'] = str(request.form['sem'])
 
 		courses = file_to_list('files/courses.dat')
 		temp = []
-		print course_allocation['courseids'] #= (request.form['courseids']).split() #split when you need
-		for i in course_allocation['courseids']:
+		#print course_allocation['courseids'] #= (request.form['courseids']).split() #split when you need
+		for i in phi:
 			flag = 0
 			for j in courses:
 				if str(j['courseid']) == str(i):
@@ -196,7 +223,7 @@ def spu_form(co_alloc_id):
 			if flag == 1:
 				temp.append(str(i))
 		print temp
-
+		course_allocation['courseids'] = temp
 
 		students = file_to_list('files/students.dat')
 		relations = file_to_list('files/relations.dat')
@@ -208,8 +235,11 @@ def spu_form(co_alloc_id):
 		course_allocations = file_to_list('files/course_allocations.dat')
 
 		for stu in xrange(len(course_allocations)):
-			if(course_allocations[stu]['co_alloc_id']) == co_alloc_id:
-				course_allocations[stu] = course_allocation
+			try:
+				if(course_allocations[stu]['co_alloc_id']) == co_alloc_id:
+					course_allocations[stu] = course_allocation
+			except:
+				pass
 		
 		#if flag_change:
 		#	for stu in xrange(len(students)):
@@ -218,8 +248,11 @@ def spu_form(co_alloc_id):
 
 		if flag_change: #remove previous relations
 			for i in xrange(len(relations)):
-				if relations[i]['co_alloc_id'] == co_alloc_id:
-					del relations[i]
+				try:
+					if relations[i]['co_alloc_id'] == co_alloc_id:
+						del relations[i]
+				except:
+					pass
 
 		for i in students:
 			if i['type'] == course_allocation['type'] and i['branch']== course_allocation['branch'] and i['sem']== course_allocation['sem']:
@@ -227,7 +260,11 @@ def spu_form(co_alloc_id):
 				relation['co_alloc_id'] = course_allocation['co_alloc_id']
 				relation['rollno'] = i['rollno']
 				relation['dor'] = datetime.datetime.now()
-				if relation not in relations:
+				flag = 0
+				for r in relations:
+					if r['co_alloc_id'] == relation['co_alloc_id'] and r['rollno'] == relation['rollno']:
+						flag = 1
+				if flag == 0: #wrong, cause of dor, check only for first two ###############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					relations.append(relation)
 					print relations
 					write_com(relations, 'files/relations.dat')
@@ -240,10 +277,19 @@ def spu_form(co_alloc_id):
 		course_allocations = file_to_list('files/course_allocations.dat')
 		found = 0
 		for stu in xrange(len(course_allocations)):
-			if(course_allocations[stu]['co_alloc_id']) == co_alloc_id:
-				found = 1
-				course_allocation = course_allocations[stu]
-				return render_template('spm.html', y = course_allocation)
+			try:
+				if(course_allocations[stu]['co_alloc_id']) == co_alloc_id:
+					found = 1
+					course_allocation = course_allocations[stu]
+					phi = ''
+					for i in course_allocation['courseids']:
+						print i
+						phi = phi + str(i) + ' '
+					print phi
+					course_allocation['courseids'] = phi
+					return render_template('spm.html', y = course_allocation)
+			except:
+				pass
 		print found
 		#return render_template('sm.html', y = rollno)
 

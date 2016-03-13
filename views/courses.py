@@ -58,12 +58,18 @@ def cd():
 			if(courses[i]['courseid']) == x:
 				del courses[i]
 				found = 1
-				for j in xrange(len(course_allocations)): #list
-					if x in course_allocations[j]['courseids']:
-						course_allocations[j]['courseids'].remove(x) #needs testing
-						write_com(course_allocations, 'files/course_allocations.dat')
-				write_com(courses, 'files/courses.dat')
-				return render_template('cd.html', flag = 99)
+		for j in xrange(len(course_allocations)): #list
+			#print j
+			#print course_allocations[j]['courseids']
+			try:
+				if x in course_allocations[j]['courseids']:
+					course_allocations[j]['courseids'].remove(x) #needs testing
+			except:
+				pass
+		write_com(course_allocations, 'files/course_allocations.dat')
+		write_com(courses, 'files/courses.dat')
+		if found == 1:
+			return render_template('cd.html', flag = 99)
 		if found == 0:
 			return render_template('cd.html', flag = 6)
 	else:
