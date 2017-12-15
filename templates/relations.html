@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+    
+    <title>DBMS</title>
+{% endblock head %}
+{% block content %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Student Management System</a>
+            </div>
+            
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>Relations Menu</h1>
+                <p>Options to manipulate Relation records</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+            	<div class="panel panel-default">
+            		<div class="panel-heading"><h4>Options</h4></div>
+  					<div class="panel-body">
+  					<a href = '/r_add' class="btn btn-success btn-block"><h4>Add a Relation</h4></a>
+  					<a href = '/r_del' class="btn btn-success btn-block"><h4>Delete a Relation</h4></a>
+  					<a href = '/r_upd' class="btn btn-success btn-block"><h4>Modify a Relation</h4></a>
+            <a href = '/r_exp' class="btn btn-success btn-block"><h4>Check for Expiry</h4></a>
+  					<a href = '/r_all' class="btn btn-success btn-block"><h4>Display the Relations Table</h4></a>
+
+  					</div>
+				</div>
+            </div>
+         </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+{% endblock content %}

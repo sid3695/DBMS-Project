@@ -1,0 +1,130 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+    
+    <title>DBMS</title>
+{% endblock head %}
+{% block content %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Student Management System</a>
+            </div>
+            
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>Modify student</h1>
+                <p>Fill in the details accordingly</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+            	<div class="panel panel-default">
+            		<div class="panel-heading"><h4>Form</h4></div>
+  					<div class="panel-body">
+  					<form class="form-horizontal" role="form" method="post" action="/su_form/{{y.rollno}}">
+            {%if flag == 1%}
+            <p>Gender can only be M or F</p>
+            {%elif flag == 2%}
+            <p>Phone number should be of 10 digits</p>
+            {%elif flag == 3%}
+            <p>Branch can only be COE, ME or ECE</p>
+            {%elif flag == 4%}
+            <p>Programme can only be PG/UG</p>
+            {%elif flag == 5%}
+            <p>Sems for UG can be at max 8, and for UG, at max 2</p>
+            {%elif flag == 6%}
+            <p>Roll No not allotted</p>
+            {%elif flag == 99%}
+            <p>Updated Successfully</p>
+            {%endif%}
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Name:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="name" placeholder="Enter name" value = "{{y.name}}" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Roll-No:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="rollno" placeholder="Enter the roll no." value = "{{y.rollno}}" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">DOB:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="dob" placeholder="Enter date of birth" value = "{{y.dob}}" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Sex:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="sex" placeholder="Enter sex of the student (M/F)" value = "{{y.sex}}" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Address:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="address" placeholder="Enter address" value = "{{y.address}}"  required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Phone No.:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="phone" placeholder="Enter phone no." value = "{{y.phone}}" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Branch:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="branch" placeholder="Enter branch (COE/ME/ECE)" value = "{{y.branch}}"  required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Programme Type:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="type" placeholder="Enter programme type (PG/UG)" value = "{{y.type}}"  required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-2" for="email">Semester:</label>
+              <div class="col-sm-10">
+                <input class="form-control" name="sem" placeholder="Enter current semester." value = "{{y.sem}}" required>
+              </div>
+            </div>
+
+            
+            <div class="form-group"> 
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+              </div>
+            </div>
+          </form>
+  					</div>
+				</div>
+            </div>
+         </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+{% endblock content %}
