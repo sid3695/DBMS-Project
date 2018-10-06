@@ -33,20 +33,27 @@ def del_all():
 
  	return render_template('index.html')
 
+PER_DAY_FINE = 50
+
 @mapp.route('/fine', methods = ['GET', 'POST'])
 def fine():
 	if request.method == 'POST':
-		x = str(request.form['date'])
-		y = x.replace('-',' ').split()
-		d0 = date(int(y[2]), int(y[1]), int(y[0]))
-		print d0
-		students = file_to_list('files/students.dat')
-		data = {}
-		for i in students:
-			d1 = i['regdate']
-			if ((d1-d0).days*50 > 0):
-				data[ i['rollno'] ] = (d1-d0).days*50
-		print data
-		return render_template('fine_tab.html', data = data)
+		inputStrDate = str(request.form['date'])
+		splittedDate = map(int, inputStrDate.split('-'))
+		inputDate = date(splittedDate[2], splittedDate[1], splittedDate[0])
+		print inputDate
+
+		allStudents = file_to_list('files/students.dat')
+		defaulterStudents = {}
+
+		for student in allStudents:
+			regDate = student['regdate']
+			numOfDays = (regDate-inputDate).days
+			if numOfDays > 0:
+				fine = numOfDays * PER_DAY_FINE
+				defaulterStudents[student['rollno']] = fine
+		print defaulterStudents
+
+		return render_template('fine_tab.html', data = defaulterStudents)
 	else:
 		return render_template('fine.html')
